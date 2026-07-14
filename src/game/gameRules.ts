@@ -79,30 +79,11 @@ export function isTileCovered(
  * @returns `true` if at least one horizontal side is open.
  */
 export function isTileSideFree(
-  tile: GameTile,
-  allTiles: readonly GameTile[],
+  _tile: GameTile,
+  _allTiles: readonly GameTile[],
 ): boolean {
-  const { x, y, z } = tile.position;
-  const active = activeTiles(allTiles);
-
-  const leftBlocked = active.some(
-    (other) =>
-      other.id !== tile.id &&
-      other.position.z === z &&
-      other.position.x === x - 2 &&
-      Math.abs(other.position.y - y) < 2,
-  );
-
-  const rightBlocked = active.some(
-    (other) =>
-      other.id !== tile.id &&
-      other.position.z === z &&
-      other.position.x === x + 2 &&
-      Math.abs(other.position.y - y) < 2,
-  );
-
-  // Free if at least one side is open.
-  return !(leftBlocked && rightBlocked);
+  // Flat grid: all tiles are accessible, no left/right blocking rules
+  return true;
 }
 
 // ---------------------------------------------------------------------------
@@ -266,28 +247,11 @@ export function isPositionCovered(
  * @returns `true` if at least one horizontal side is open.
  */
 export function isPositionSideFree(
-  pos: TilePosition,
-  occupied: readonly TilePosition[],
+  _pos: TilePosition,
+  _occupied: readonly TilePosition[],
 ): boolean {
-  const { x, y, z } = pos;
-
-  const leftBlocked = occupied.some(
-    (o) =>
-      o.z === z &&
-      o.x === x - 2 &&
-      Math.abs(o.y - y) < 2 &&
-      !(o.x === x && o.y === y), // exclude self
-  );
-
-  const rightBlocked = occupied.some(
-    (o) =>
-      o.z === z &&
-      o.x === x + 2 &&
-      Math.abs(o.y - y) < 2 &&
-      !(o.x === x && o.y === y),
-  );
-
-  return !(leftBlocked && rightBlocked);
+  // Flat grid: all tiles are accessible, no left/right blocking rules
+  return true;
 }
 
 /**
