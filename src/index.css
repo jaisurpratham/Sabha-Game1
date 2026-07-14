@@ -147,7 +147,7 @@ body {
   padding: 6px;
   text-align: center;
   font-family: var(--font-ui);
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 600;
   line-height: 1.2;
   color: var(--color-temple-text);
@@ -175,6 +175,12 @@ body {
     /* Soft outer shadow */
     4px 6px 12px rgba(111, 44, 44, 0.1),
     2px 3px 6px rgba(111, 44, 44, 0.08);
+}
+
+/* Large text mode overrides */
+.large-text .tile-face {
+  font-size: 26px;
+  font-weight: 700;
 }
 
 /* Lotus corner carvings */
