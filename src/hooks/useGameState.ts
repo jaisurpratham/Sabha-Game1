@@ -31,6 +31,7 @@ const initialState: GameState = {
   hintPair: null,
   gameStarted: false,
   totalPairs: 0,
+  currentMatch: null,
 };
 
 // ---------------------------------------------------------------------------
@@ -81,8 +82,8 @@ function gameReducer(state: GameState, action: GameAction): GameState {
     case 'SELECT_TILE': {
       const tile = state.tiles.find((t) => t.id === action.tileId);
 
-      // Ignore clicks on removed tiles or non-free tiles.
-      if (!tile || tile.removed || !isTileFree(tile, state.tiles)) {
+      // Ignore clicks on removed tiles, non-free tiles, or if a match popup is open
+      if (!tile || tile.removed || !isTileFree(tile, state.tiles) || state.currentMatch) {
         return state;
       }
 
@@ -123,11 +124,10 @@ function gameReducer(state: GameState, action: GameAction): GameState {
       // ── Match! ───────────────────────────────────────────────────────
       if (firstTile.word === tile.word) {
         const newCombo = state.combo + 1;
-        const matchScore = calculateMatchScore(newCombo, state.timeElapsed);
 
         const newTiles = state.tiles.map((t) => {
           if (t.id === firstTile.id || t.id === tile.id) {
-            return { ...t, state: 'matched' as const, removed: true };
+            return { ...t, state: 'matched' as const };
           }
           return {
             ...t,
@@ -135,19 +135,14 @@ function gameReducer(state: GameState, action: GameAction): GameState {
           };
         });
 
-        const newMatches = state.matches + 1;
-        const isComplete = newMatches === state.totalPairs;
-
         return {
           ...state,
           tiles: newTiles,
           selectedTileId: null,
           moves: state.moves + 1,
-          matches: newMatches,
-          score: state.score + matchScore,
           combo: newCombo,
-          isComplete,
           hintPair: null,
+          currentMatch: { word: firstTile.word, tileIds: [firstTile.id, tile.id] },
         };
       }
 
@@ -230,8 +225,26 @@ function gameReducer(state: GameState, action: GameAction): GameState {
     case 'TOGGLE_PAUSE':
       return { ...state, isPaused: !state.isPaused };
 
-    case 'CLEAR_HINT':
-      return { ...state, hintPair: null };
+    case 'CLEAR_MATCH_POPUP': {
+      if (!state.currentMatch) return state;
+      
+      const matchScore = calculateMatchScore(state.combo, state.timeElapsed);
+      const newMatches = state.matches + 1;
+      const isComplete = newMatches === state.totalPairs;
+      
+      return {
+        ...state,
+        currentMatch: null,
+        matches: newMatches,
+        score: state.score + matchScore,
+        isComplete,
+        tiles: state.tiles.map(t => 
+          state.currentMatch!.tileIds.includes(t.id) 
+            ? { ...t, removed: true } 
+            : t
+        ),
+      };
+    }
 
     default:
       return state;

@@ -7,6 +7,7 @@ import Controls from './Controls';
 import ProgressBar from './ProgressBar';
 import WinModal from './WinModal';
 import ParticleSystem from './ParticleSystem';
+import MatchPopup from './MatchPopup';
 import type { LayoutType, Difficulty } from '../game/types';
 
 type Screen = 'menu' | 'game';
@@ -61,6 +62,8 @@ function AppContent() {
           </>
         )}
       </div>
+
+      <MatchPopup />
 
       {/* Win Modal */}
       {state.isComplete && (

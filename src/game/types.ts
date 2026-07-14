@@ -57,16 +57,7 @@ export interface GameTile {
 // Layout & difficulty enums
 // ---------------------------------------------------------------------------
 
-/**
- * Available board layout shapes.
- *
- * - `turtle`  — classic Mahjong shell/tortoise shape
- * - `pyramid` — triangular/diamond stacking
- * - `temple`  — mandir gopuram silhouette
- * - `lotus`   — circular petal radiating pattern
- * - `random`  — algorithmically generated valid layout
- */
-export type LayoutType = 'turtle' | 'pyramid' | 'temple' | 'lotus' | 'random';
+export type LayoutType = 'grid';
 
 /**
  * Difficulty levels that control word count, layer depth, and scoring.
@@ -115,6 +106,8 @@ export interface GameState {
   gameStarted: boolean;
   /** Total number of pairs to match (tiles.length / 2 at start). */
   totalPairs: number;
+  /** Current active match waiting to be dismissed, or null. */
+  currentMatch: { word: string; tileIds: [number, number] } | null;
 }
 
 // ---------------------------------------------------------------------------
@@ -172,4 +165,5 @@ export type GameAction =
   | { type: 'TOGGLE_PAUSE' }
   | { type: 'CLEAR_HINT' }
   | { type: 'SET_TILE_STATE'; tileId: number; state: TileState }
-  | { type: 'COMPLETE_MATCH'; tile1Id: number; tile2Id: number };
+  | { type: 'COMPLETE_MATCH'; tile1Id: number; tile2Id: number }
+  | { type: 'CLEAR_MATCH_POPUP' };

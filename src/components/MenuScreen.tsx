@@ -1,7 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import WordImporter from './WordImporter';
-import LayoutSelector from './LayoutSelector';
 import DifficultySelector from './DifficultySelector';
 import type { LayoutType, Difficulty } from '../game/types';
 
@@ -34,9 +33,9 @@ const DEFAULT_WORDS = [
 
 export default function MenuScreen({ onStartGame }: MenuScreenProps) {
   const [words, setWords] = useState<string[]>(DEFAULT_WORDS);
-  const [layout, setLayout] = useState<LayoutType>('turtle');
+  const layout: LayoutType = 'grid';
   const [difficulty, setDifficulty] = useState<Difficulty>('medium');
-  const [step, setStep] = useState<1 | 2 | 3>(1);
+  const [step, setStep] = useState<1 | 2>(1);
 
   const canStart = words.length >= 6;
 
@@ -116,10 +115,10 @@ export default function MenuScreen({ onStartGame }: MenuScreenProps) {
           gap: 8,
           alignItems: 'center',
         }}>
-          {[1, 2, 3].map(s => (
+          {[1, 2].map(s => (
             <React.Fragment key={s}>
               <button
-                onClick={() => setStep(s as 1 | 2 | 3)}
+                onClick={() => setStep(s as 1 | 2)}
                 style={{
                   width: 32,
                   height: 32,
@@ -140,7 +139,7 @@ export default function MenuScreen({ onStartGame }: MenuScreenProps) {
               >
                 {s}
               </button>
-              {s < 3 && (
+              {s < 2 && (
                 <div style={{
                   width: 40,
                   height: 2,
@@ -174,12 +173,6 @@ export default function MenuScreen({ onStartGame }: MenuScreenProps) {
               />
             )}
             {step === 2 && (
-              <LayoutSelector
-                selected={layout}
-                onSelect={setLayout}
-              />
-            )}
-            {step === 3 && (
               <DifficultySelector
                 selected={difficulty}
                 onSelect={setDifficulty}
@@ -196,17 +189,17 @@ export default function MenuScreen({ onStartGame }: MenuScreenProps) {
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               className="btn-temple btn-secondary"
-              onClick={() => setStep((step - 1) as 1 | 2 | 3)}
+              onClick={() => setStep(1)}
             >
               ← Back
             </motion.button>
           )}
-          {step < 3 ? (
+          {step < 2 ? (
             <motion.button
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               className="btn-temple btn-primary"
-              onClick={() => setStep((step + 1) as 1 | 2 | 3)}
+              onClick={() => setStep(2)}
               disabled={step === 1 && !canStart}
               style={{ opacity: step === 1 && !canStart ? 0.5 : 1 }}
             >
