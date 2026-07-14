@@ -66,7 +66,7 @@ export default function WinModal({ onPlayAgain, onNewLayout }: WinModalProps) {
             transition={{ delay: 0.4, duration: 0.4 }}
             style={{
               fontFamily: 'var(--font-heading)',
-              fontSize: 'clamp(22px, 4vw, 30px)',
+              fontSize: 'clamp(28px, 5vw, 36px)',
               fontWeight: 700,
               color: 'var(--color-maroon)',
               margin: '0 0 8px 0',

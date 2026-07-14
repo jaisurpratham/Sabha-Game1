@@ -32,8 +32,8 @@
   --color-temple-text-light: #7A6B5D;
 
   /* Typography */
-  --font-heading: 'Cinzel', serif;
-  --font-body: 'Noto Serif', serif;
+  --font-heading: 'Poppins', sans-serif;
+  --font-body: 'Poppins', sans-serif;
   --font-ui: 'Poppins', sans-serif;
 }
 
@@ -439,10 +439,10 @@ body {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 10px 24px;
+  padding: 12px 28px;
   font-family: var(--font-ui);
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 600;
   border: none;
   border-radius: 10px;
   cursor: pointer;
@@ -581,15 +581,15 @@ body {
 
 .stat-badge .stat-value {
   font-family: var(--font-heading);
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 22px;
+  font-weight: 700;
   color: var(--color-maroon);
 }
 
 .stat-badge .stat-label {
   font-family: var(--font-ui);
-  font-size: 10px;
-  font-weight: 400;
+  font-size: 13px;
+  font-weight: 600;
   color: var(--color-temple-text-light);
   text-transform: uppercase;
   letter-spacing: 0.5px;

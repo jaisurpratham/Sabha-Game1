@@ -84,7 +84,7 @@ export default function MenuScreen({ onStartGame }: MenuScreenProps) {
             <LotusDecoration className="text-saffron" />
             <h1 style={{
               fontFamily: 'var(--font-heading)',
-              fontSize: 'clamp(28px, 5vw, 42px)',
+              fontSize: 'clamp(32px, 6vw, 48px)',
               fontWeight: 600,
               color: 'var(--color-maroon)',
               margin: 0,

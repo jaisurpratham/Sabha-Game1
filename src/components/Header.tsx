@@ -40,7 +40,7 @@ export default function Header({ onBack }: HeaderProps) {
           </motion.button>
           <h1 style={{
             fontFamily: 'var(--font-heading)',
-            fontSize: 'clamp(14px, 2.5vw, 20px)',
+            fontSize: 'clamp(18px, 3.5vw, 26px)',
             fontWeight: 600,
             color: 'var(--color-maroon)',
             margin: 0,
