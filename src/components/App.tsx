@@ -8,6 +8,7 @@ import ProgressBar from './ProgressBar';
 import WinModal from './WinModal';
 import ParticleSystem from './ParticleSystem';
 import MatchPopup from './MatchPopup';
+import FoundWordsList from './FoundWordsList';
 import type { LayoutType, Difficulty } from '../game/types';
 
 type Screen = 'menu' | 'game';
@@ -57,6 +58,7 @@ function AppContent() {
           <>
             <Header onBack={handleBackToMenu} />
             <GameBoard />
+            <FoundWordsList />
             <Controls />
             <ProgressBar />
           </>
