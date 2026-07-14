@@ -5,14 +5,14 @@ import Tile from './Tile';
 import { isTileFree } from '../game/gameRules';
 
 /** Pixel dimensions for tile rendering */
-const TILE_W = 72;
-const TILE_H = 88;
-const TILE_GAP = 2;
+const TILE_W = 160;
+const TILE_H = 90;
+const TILE_GAP = 8;
 const LAYER_OFFSET_X = -3;
 const LAYER_OFFSET_Y = -3;
 
 /** Mobile tile dimensions */
-const MOBILE_TILE_W = 56;
+const MOBILE_TILE_W = 120;
 const MOBILE_TILE_H = 70;
 
 export default function GameBoard() {

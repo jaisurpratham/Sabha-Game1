@@ -119,7 +119,7 @@ export default function Tile({
                 fontSize: tileW < 60 ? 18 : 24,
               }}
             >
-              🪷
+              ?
             </motion.span>
           )}
         </AnimatePresence>

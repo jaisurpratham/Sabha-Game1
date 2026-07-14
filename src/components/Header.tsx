@@ -5,12 +5,6 @@ interface HeaderProps {
   onBack: () => void;
 }
 
-/** Format seconds as MM:SS */
-function formatTime(seconds: number): string {
-  const mins = Math.floor(seconds / 60);
-  const secs = seconds % 60;
-  return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-}
 
 export default function Header({ onBack }: HeaderProps) {
   const { state } = useGame();
@@ -47,7 +41,7 @@ export default function Header({ onBack }: HeaderProps) {
             letterSpacing: '1px',
             whiteSpace: 'nowrap',
           }}>
-            मंदिर Mahjong
+            Gunn gava tin jeev bhramrup thai
           </h1>
         </div>
 
@@ -64,14 +58,6 @@ export default function Header({ onBack }: HeaderProps) {
           <div className="stat-badge">
             <span className="stat-value">{state.matches}/{state.totalPairs}</span>
             <span className="stat-label">Matches</span>
-          </div>
-          <div className="stat-badge">
-            <span className="stat-value">{formatTime(state.timeElapsed)}</span>
-            <span className="stat-label">Time</span>
-          </div>
-          <div className="stat-badge">
-            <span className="stat-value" style={{ color: 'var(--color-gold-dark)' }}>{state.score}</span>
-            <span className="stat-label">Score</span>
           </div>
         </div>
 
