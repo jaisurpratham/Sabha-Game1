@@ -3,7 +3,6 @@ import { GameProvider, useGame } from '../context/GameContext';
 import MenuScreen from './MenuScreen';
 import GameBoard from './GameBoard';
 import Header from './Header';
-import Controls from './Controls';
 import ProgressBar from './ProgressBar';
 import WinModal from './WinModal';
 import ParticleSystem from './ParticleSystem';
@@ -59,7 +58,6 @@ function AppContent() {
             <Header onBack={handleBackToMenu} />
             <GameBoard />
             <FoundWordsList />
-            <Controls />
             <ProgressBar />
           </>
         )}

@@ -1,7 +1,6 @@
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import WordImporter from './WordImporter';
-import DifficultySelector from './DifficultySelector';
 import type { LayoutType, Difficulty } from '../game/types';
 
 interface MenuScreenProps {
@@ -20,8 +19,7 @@ const DEFAULT_WORDS = [
 export default function MenuScreen({ onStartGame }: MenuScreenProps) {
   const [words, setWords] = useState<string[]>(DEFAULT_WORDS);
   const layout: LayoutType = 'grid';
-  const [difficulty, setDifficulty] = useState<Difficulty>('medium');
-  const [step, setStep] = useState<1 | 2>(1);
+  const difficulty: Difficulty = 'easy';
 
   const canStart = words.length >= 6;
 
@@ -93,53 +91,11 @@ export default function MenuScreen({ onStartGame }: MenuScreenProps) {
           <span style={{ fontSize: 12 }}>🪷</span>
         </div>
 
-        {/* Step Indicators */}
-        <div style={{
-          display: 'flex',
-          gap: 8,
-          alignItems: 'center',
-        }}>
-          {[1, 2].map(s => (
-            <React.Fragment key={s}>
-              <button
-                onClick={() => setStep(s as 1 | 2)}
-                style={{
-                  width: 32,
-                  height: 32,
-                  borderRadius: '50%',
-                  border: 'none',
-                  cursor: 'pointer',
-                  fontFamily: 'var(--font-heading)',
-                  fontSize: 14,
-                  fontWeight: 600,
-                  transition: 'all 0.2s ease',
-                  background: step === s
-                    ? 'linear-gradient(135deg, var(--color-saffron), var(--color-saffron-dark))'
-                    : 'var(--color-sandstone)',
-                  color: step === s ? 'white' : 'var(--color-temple-text-light)',
-                  boxShadow: step === s ? '0 2px 8px rgba(217,142,4,0.3)' : 'none',
-                }}
-                aria-label={`Step ${s}`}
-              >
-                {s}
-              </button>
-              {s < 2 && (
-                <div style={{
-                  width: 40,
-                  height: 2,
-                  background: s < step ? 'var(--color-saffron)' : 'var(--color-sandstone)',
-                  borderRadius: 1,
-                  transition: 'background 0.3s ease',
-                }} />
-              )}
-            </React.Fragment>
-          ))}
-        </div>
+
 
         {/* Step Content */}
         <AnimatePresence mode="wait">
           <motion.div
-            key={step}
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
@@ -150,65 +106,33 @@ export default function MenuScreen({ onStartGame }: MenuScreenProps) {
               padding: 24,
             }}
           >
-            {step === 1 && (
-              <WordImporter
-                words={words}
-                onWordsChange={handleWordsChange}
-              />
-            )}
-            {step === 2 && (
-              <DifficultySelector
-                selected={difficulty}
-                onSelect={setDifficulty}
-                wordCount={words.length}
-              />
-            )}
+            <WordImporter
+              words={words}
+              onWordsChange={handleWordsChange}
+            />
           </motion.div>
         </AnimatePresence>
 
         {/* Navigation */}
         <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-          {step > 1 && (
-            <motion.button
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              className="btn-temple btn-secondary"
-              onClick={() => setStep(1)}
-            >
-              ← Back
-            </motion.button>
-          )}
-          {step < 2 ? (
-            <motion.button
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              className="btn-temple btn-primary"
-              onClick={() => setStep(2)}
-              disabled={step === 1 && !canStart}
-              style={{ opacity: step === 1 && !canStart ? 0.5 : 1 }}
-            >
-              Next →
-            </motion.button>
-          ) : (
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="btn-temple btn-maroon"
-              onClick={handleStart}
-              disabled={!canStart}
-              style={{
-                opacity: canStart ? 1 : 0.5,
-                padding: '12px 32px',
-                fontSize: 16,
-                fontWeight: 600,
-              }}
-            >
-              🙏 Begin Journey
-            </motion.button>
-          )}
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="btn-temple btn-maroon"
+            onClick={handleStart}
+            disabled={!canStart}
+            style={{
+              opacity: canStart ? 1 : 0.5,
+              padding: '12px 32px',
+              fontSize: 16,
+              fontWeight: 600,
+            }}
+          >
+            🙏 Begin Journey
+          </motion.button>
         </div>
 
-        {!canStart && step === 1 && (
+        {!canStart && (
           <p style={{
             fontFamily: 'var(--font-ui)',
             fontSize: 12,
