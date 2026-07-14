@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useGame } from '../context/GameContext';
 import { calculateFinalScore, getScoreRating } from '../game/scoring';
@@ -16,7 +15,7 @@ function formatTime(seconds: number): string {
 }
 
 export default function WinModal({ onPlayAgain, onNewLayout }: WinModalProps) {
-  const { state, audio } = useGame();
+  const { state } = useGame();
 
 
   const finalScore = calculateFinalScore(
