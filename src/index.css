@@ -1,0 +1,847 @@
+@import "tailwindcss";
+
+/* ===== Mandir Mahjong Design System ===== */
+/* Temple-inspired theme using TailwindCSS v4 CSS-first configuration */
+
+@theme {
+  /* Sacred Color Palette */
+  --color-ivory: #F8F4EC;
+  --color-sandstone: #E8D9C5;
+  --color-sandstone-dark: #D4C4A8;
+  --color-beige: #DCC6A5;
+  --color-beige-light: #EDE3D3;
+  --color-saffron: #D98E04;
+  --color-saffron-light: #F0B642;
+  --color-saffron-dark: #B87503;
+  --color-maroon: #6F2C2C;
+  --color-maroon-light: #8B3A3A;
+  --color-maroon-dark: #4A1D1D;
+  --color-gold: #C9A227;
+  --color-gold-light: #E0BE4A;
+  --color-gold-dark: #9A7B1A;
+  --color-teal: #5E8B7E;
+  --color-teal-light: #7BA99A;
+  --color-teal-dark: #456B60;
+
+  /* Temple Neutrals */
+  --color-temple-bg: #F5EFE4;
+  --color-temple-surface: #FAF7F2;
+  --color-temple-border: #D4C4A8;
+  --color-temple-shadow: #B5A48A;
+  --color-temple-text: #3D2B1F;
+  --color-temple-text-light: #7A6B5D;
+
+  /* Typography */
+  --font-heading: 'Cinzel', serif;
+  --font-body: 'Noto Serif', serif;
+  --font-ui: 'Poppins', sans-serif;
+}
+
+/* ===== Global Reset & Base ===== */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-ui);
+  background-color: var(--color-temple-bg);
+  color: var(--color-temple-text);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== Temple Background ===== */
+
+.temple-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: 
+    radial-gradient(ellipse at 50% 0%, rgba(217, 142, 4, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(201, 162, 39, 0.06) 0%, transparent 40%),
+    radial-gradient(ellipse at 20% 80%, rgba(94, 139, 126, 0.05) 0%, transparent 40%),
+    linear-gradient(180deg, #F5EFE4 0%, #EDE3D3 40%, #E8D9C5 100%);
+}
+
+/* Subtle sandstone texture overlay */
+.temple-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: 
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 2px,
+      rgba(111, 44, 44, 0.1) 2px,
+      rgba(111, 44, 44, 0.1) 4px
+    );
+}
+
+/* Gentle sun rays */
+.temple-bg::after {
+  content: '';
+  position: absolute;
+  top: -20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120%;
+  height: 60%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(217, 142, 4, 0.06) 0%,
+    rgba(201, 162, 39, 0.03) 30%,
+    transparent 70%
+  );
+  animation: sunRayPulse 8s ease-in-out infinite;
+}
+
+@keyframes sunRayPulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* ===== Lotus Motif (SVG background decoration) ===== */
+
+.lotus-motif {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M30 8c-2 6-8 12-8 18s6 8 8 10c2-2 8-4 8-10s-6-12-8-18z' fill='none' stroke='%23D4C4A8' stroke-width='0.5' opacity='0.3'/%3E%3C/svg%3E");
+  background-size: 60px 60px;
+}
+
+/* ===== Tile Styles ===== */
+
+.tile {
+  position: absolute;
+  width: 72px;
+  height: 88px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.tile-face {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--color-temple-text);
+  word-break: break-word;
+  overflow: hidden;
+
+  /* Carved sandstone appearance */
+  background: linear-gradient(
+    145deg,
+    #FAF7F2 0%,
+    #F5EFE4 30%,
+    #EDE3D3 70%,
+    #E8D9C5 100%
+  );
+  
+  /* Engraved border effect */
+  border: 1.5px solid var(--color-sandstone-dark);
+  box-shadow:
+    /* 3D depth - bottom/right side */
+    2px 3px 0px 0px #D4C4A8,
+    3px 5px 0px 0px #C4B498,
+    /* Inner light for carved feel */
+    inset 0 1px 2px rgba(255, 255, 255, 0.6),
+    inset 0 -1px 2px rgba(180, 164, 138, 0.3),
+    /* Soft outer shadow */
+    4px 6px 12px rgba(111, 44, 44, 0.1),
+    2px 3px 6px rgba(111, 44, 44, 0.08);
+}
+
+/* Lotus corner carvings */
+.tile-face::before,
+.tile-face::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  opacity: 0.25;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2c-1.5 4-5 8-5 12s4 6 5 7c1-1 5-3 5-7s-3.5-8-5-12z' fill='none' stroke='%236F2C2C' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.tile-face::before {
+  top: 3px;
+  left: 3px;
+}
+.tile-face::after {
+  bottom: 3px;
+  right: 3px;
+  transform: rotate(180deg);
+}
+
+/* Inner engraved border */
+.tile-inner-border {
+  position: absolute;
+  inset: 3px;
+  border: 1px solid rgba(212, 196, 168, 0.5);
+  border-radius: 5px;
+  pointer-events: none;
+}
+
+/* ===== Tile States ===== */
+
+/* Hover */
+.tile:hover .tile-face {
+  background: linear-gradient(
+    145deg,
+    #FFFDF8 0%,
+    #FAF7F2 30%,
+    #F5EFE4 70%,
+    #EDE3D3 100%
+  );
+  border-color: var(--color-gold);
+  box-shadow:
+    2px 3px 0px 0px #D4C4A8,
+    3px 5px 0px 0px #C4B498,
+    inset 0 1px 2px rgba(255, 255, 255, 0.7),
+    inset 0 -1px 2px rgba(180, 164, 138, 0.2),
+    4px 6px 16px rgba(111, 44, 44, 0.12),
+    0 0 12px rgba(201, 162, 39, 0.15);
+}
+
+.tile:hover {
+  transform: translateY(-2px);
+}
+
+/* Selected */
+.tile-selected .tile-face {
+  background: linear-gradient(
+    145deg,
+    #FFF8E8 0%,
+    #FAF0D4 30%,
+    #F5E8C0 70%,
+    #EDE0B0 100%
+  );
+  border-color: var(--color-saffron);
+  box-shadow:
+    2px 3px 0px 0px #C9A227,
+    3px 5px 0px 0px #B89520,
+    inset 0 1px 3px rgba(255, 255, 255, 0.8),
+    inset 0 -1px 2px rgba(217, 142, 4, 0.15),
+    4px 6px 16px rgba(217, 142, 4, 0.15),
+    0 0 20px rgba(217, 142, 4, 0.12),
+    0 0 40px rgba(201, 162, 39, 0.06);
+}
+
+.tile-selected {
+  transform: translateY(-3px);
+  z-index: 100 !important;
+}
+
+/* Hint glow */
+.tile-hint .tile-face {
+  animation: hintGlow 1.5s ease-in-out infinite;
+  border-color: var(--color-gold);
+}
+
+@keyframes hintGlow {
+  0%, 100% {
+    box-shadow:
+      2px 3px 0px 0px #D4C4A8,
+      3px 5px 0px 0px #C4B498,
+      inset 0 1px 2px rgba(255, 255, 255, 0.6),
+      0 0 8px rgba(201, 162, 39, 0.2);
+  }
+  50% {
+    box-shadow:
+      2px 3px 0px 0px #D4C4A8,
+      3px 5px 0px 0px #C4B498,
+      inset 0 1px 2px rgba(255, 255, 255, 0.6),
+      0 0 20px rgba(201, 162, 39, 0.4),
+      0 0 40px rgba(201, 162, 39, 0.15);
+  }
+}
+
+/* Disabled */
+.tile-disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.tile-disabled .tile-face {
+  background: linear-gradient(
+    145deg,
+    #EDE3D3 0%,
+    #E4D9C5 50%,
+    #DCD0B8 100%
+  );
+}
+
+.tile-disabled:hover {
+  transform: none;
+}
+.tile-disabled:hover .tile-face {
+  border-color: var(--color-sandstone-dark);
+  box-shadow:
+    2px 3px 0px 0px #D4C4A8,
+    3px 5px 0px 0px #C4B498,
+    inset 0 1px 2px rgba(255, 255, 255, 0.6),
+    inset 0 -1px 2px rgba(180, 164, 138, 0.3),
+    4px 6px 12px rgba(111, 44, 44, 0.1);
+}
+
+/* ===== Diya (Lamp) Glow Animation ===== */
+
+@keyframes diyaGlow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+.diya-glow {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(217, 142, 4, 0.15) 0%,
+    rgba(217, 142, 4, 0.05) 40%,
+    transparent 70%
+  );
+  animation: diyaGlow 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* ===== Floating Particles ===== */
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(100vh) translateX(0px);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-20px) translateX(30px);
+    opacity: 0;
+  }
+}
+
+.dust-particle {
+  position: fixed;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(201, 162, 39, 0.3);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ===== Golden Sparkle Effect ===== */
+
+@keyframes sparkle {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1) rotate(180deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(0) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.sparkle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle, var(--color-gold-light) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: sparkle 0.8s ease-out forwards;
+}
+
+/* ===== Card / Panel Styles ===== */
+
+.temple-card {
+  background: linear-gradient(
+    145deg,
+    rgba(250, 247, 242, 0.95) 0%,
+    rgba(245, 239, 228, 0.92) 100%
+  );
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(212, 196, 168, 0.4);
+  border-radius: 16px;
+  box-shadow:
+    0 4px 24px rgba(111, 44, 44, 0.06),
+    0 1px 4px rgba(111, 44, 44, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.temple-card-elevated {
+  background: linear-gradient(
+    145deg,
+    rgba(250, 247, 242, 0.98) 0%,
+    rgba(245, 239, 228, 0.96) 100%
+  );
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(212, 196, 168, 0.5);
+  border-radius: 20px;
+  box-shadow:
+    0 8px 40px rgba(111, 44, 44, 0.1),
+    0 2px 8px rgba(111, 44, 44, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+/* ===== Button Styles ===== */
+
+.btn-temple {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 24px;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--color-saffron) 0%, var(--color-saffron-dark) 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(217, 142, 4, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--color-saffron-light) 0%, var(--color-saffron) 100%);
+  box-shadow: 0 4px 16px rgba(217, 142, 4, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: translateY(0px);
+  box-shadow: 0 1px 4px rgba(217, 142, 4, 0.3);
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, var(--color-sandstone) 0%, var(--color-sandstone-dark) 100%);
+  color: var(--color-temple-text);
+  box-shadow: 0 2px 8px rgba(180, 164, 138, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.btn-secondary:hover {
+  background: linear-gradient(135deg, var(--color-beige-light) 0%, var(--color-sandstone) 100%);
+  box-shadow: 0 4px 12px rgba(180, 164, 138, 0.25);
+  transform: translateY(-1px);
+}
+
+.btn-maroon {
+  background: linear-gradient(135deg, var(--color-maroon) 0%, var(--color-maroon-dark) 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(111, 44, 44, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.btn-maroon:hover {
+  background: linear-gradient(135deg, var(--color-maroon-light) 0%, var(--color-maroon) 100%);
+  box-shadow: 0 4px 16px rgba(111, 44, 44, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-icon {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 10px;
+  font-size: 18px;
+  background: rgba(245, 239, 228, 0.8);
+  border: 1px solid rgba(212, 196, 168, 0.4);
+  color: var(--color-temple-text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-icon:hover {
+  background: rgba(250, 247, 242, 0.95);
+  border-color: var(--color-gold);
+  box-shadow: 0 2px 8px rgba(201, 162, 39, 0.15);
+  transform: translateY(-1px);
+}
+
+/* ===== Header ===== */
+
+.game-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding: 12px 20px;
+  background: linear-gradient(
+    180deg,
+    rgba(250, 247, 242, 0.97) 0%,
+    rgba(245, 239, 228, 0.95) 100%
+  );
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(212, 196, 168, 0.3);
+  box-shadow: 0 2px 12px rgba(111, 44, 44, 0.04);
+}
+
+/* ===== Progress Bar ===== */
+
+.progress-bar-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  padding: 8px 20px 12px;
+  background: linear-gradient(
+    0deg,
+    rgba(250, 247, 242, 0.97) 0%,
+    rgba(245, 239, 228, 0.9) 100%
+  );
+  backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(212, 196, 168, 0.2);
+}
+
+.progress-bar-track {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(212, 196, 168, 0.3);
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--color-sandstone-dark) 0%,
+    var(--color-saffron) 50%,
+    var(--color-gold) 100%
+  );
+  transition: width 0.5s ease;
+  box-shadow: 0 0 8px rgba(217, 142, 4, 0.3);
+}
+
+/* ===== Stats Badge ===== */
+
+.stat-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.stat-badge .stat-value {
+  font-family: var(--font-heading);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-maroon);
+}
+
+.stat-badge .stat-label {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--color-temple-text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ===== Game Board Container ===== */
+
+.game-board-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+.game-board {
+  position: relative;
+  transform-origin: center center;
+}
+
+/* ===== Word Importer ===== */
+
+.word-importer textarea {
+  width: 100%;
+  min-height: 200px;
+  padding: 16px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--color-temple-text);
+  background: rgba(250, 247, 242, 0.6);
+  border: 1.5px solid rgba(212, 196, 168, 0.4);
+  border-radius: 12px;
+  resize: vertical;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.word-importer textarea:focus {
+  outline: none;
+  border-color: var(--color-saffron);
+  box-shadow: 0 0 0 3px rgba(217, 142, 4, 0.1), 0 2px 8px rgba(217, 142, 4, 0.08);
+}
+
+.word-importer textarea::placeholder {
+  color: var(--color-temple-text-light);
+  opacity: 0.6;
+}
+
+/* ===== Modal Overlay ===== */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(61, 43, 31, 0.4);
+  backdrop-filter: blur(8px);
+}
+
+/* ===== Layout & Difficulty Selector ===== */
+
+.layout-option {
+  padding: 16px;
+  border-radius: 12px;
+  border: 2px solid transparent;
+  background: rgba(245, 239, 228, 0.5);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.layout-option:hover {
+  background: rgba(245, 239, 228, 0.8);
+  border-color: rgba(212, 196, 168, 0.5);
+}
+
+.layout-option.selected {
+  background: rgba(217, 142, 4, 0.08);
+  border-color: var(--color-saffron);
+  box-shadow: 0 0 16px rgba(217, 142, 4, 0.1);
+}
+
+.difficulty-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 500;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.difficulty-badge.selected {
+  border-color: var(--color-saffron);
+  box-shadow: 0 0 12px rgba(217, 142, 4, 0.12);
+}
+
+/* ===== Ornamental Divider ===== */
+
+.ornament-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 24px 0;
+  color: var(--color-temple-text-light);
+  opacity: 0.5;
+}
+
+.ornament-divider::before,
+.ornament-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-sandstone-dark) 50%,
+    transparent 100%
+  );
+}
+
+/* ===== Scrollbar ===== */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(212, 196, 168, 0.5);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 196, 168, 0.7);
+}
+
+/* ===== Accessibility ===== */
+
+.high-contrast .tile-face {
+  border-width: 2.5px;
+  border-color: var(--color-maroon);
+}
+
+.high-contrast .tile-selected .tile-face {
+  border-color: var(--color-saffron);
+  border-width: 3px;
+}
+
+.high-contrast .tile-disabled .tile-face {
+  opacity: 0.4;
+  border-style: dashed;
+}
+
+.large-text .tile-face {
+  font-size: 16px;
+}
+
+.large-text .stat-value {
+  font-size: 22px;
+}
+
+/* Focus visible for keyboard navigation */
+.tile:focus-visible .tile-face {
+  outline: 3px solid var(--color-saffron);
+  outline-offset: 2px;
+}
+
+.btn-temple:focus-visible,
+.btn-icon:focus-visible {
+  outline: 3px solid var(--color-saffron);
+  outline-offset: 2px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .dust-particle {
+    display: none;
+  }
+}
+
+/* ===== Responsive ===== */
+
+@media (max-width: 768px) {
+  .tile {
+    width: 56px;
+    height: 70px;
+  }
+
+  .tile-face {
+    font-size: 11px;
+    border-radius: 6px;
+    padding: 4px;
+  }
+
+  .tile-face::before,
+  .tile-face::after {
+    width: 8px;
+    height: 8px;
+  }
+
+  .tile-inner-border {
+    inset: 2px;
+  }
+
+  .game-header {
+    padding: 8px 12px;
+  }
+
+  .stat-badge .stat-value {
+    font-size: 15px;
+  }
+  
+  .stat-badge .stat-label {
+    font-size: 9px;
+  }
+
+  .btn-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tile {
+    width: 48px;
+    height: 60px;
+  }
+
+  .tile-face {
+    font-size: 10px;
+    padding: 3px;
+  }
+  
+  .tile-face::before,
+  .tile-face::after {
+    display: none;
+  }
+}
