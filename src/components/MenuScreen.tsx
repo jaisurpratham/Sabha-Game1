@@ -8,20 +8,6 @@ interface MenuScreenProps {
   onStartGame: (words: string[], layout: LayoutType, difficulty: Difficulty) => void;
 }
 
-/** Lotus SVG decoration */
-function LotusDecoration({ className = '' }: { className?: string }) {
-  return (
-    <svg className={className} width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M24 6c-2 5-7 11-7 16s5 7 7 8c2-1 7-3 7-8s-5-11-7-16z" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.6" />
-      <path d="M24 14c-4 3-10 8-10 13s4 5 5 5.5" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.4" />
-      <path d="M24 14c4 3 10 8 10 13s-4 5-5 5.5" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.4" />
-      <path d="M24 10c-6 2-14 6-14 12s5 6 7 6.5" stroke="currentColor" strokeWidth="0.6" fill="none" opacity="0.3" />
-      <path d="M24 10c6 2 14 6 14 12s-5 6-7 6.5" stroke="currentColor" strokeWidth="0.6" fill="none" opacity="0.3" />
-      <ellipse cx="24" cy="38" rx="8" ry="3" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.3" />
-    </svg>
-  );
-}
-
 const DEFAULT_WORDS = [
   'Dharma', 'Karma', 'Mantra', 'Seva', 'Bhakti',
   'Puja', 'Shakti', 'Moksha', 'Guru', 'Deva',
@@ -80,18 +66,16 @@ export default function MenuScreen({ onStartGame }: MenuScreenProps) {
           style={{ textAlign: 'center' }}
         >
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, marginBottom: 8 }}>
-            <LotusDecoration className="text-saffron" />
             <h1 style={{
               fontFamily: 'var(--font-heading)',
-              fontSize: 'clamp(32px, 6vw, 48px)',
+              fontSize: 'clamp(24px, 4vw, 36px)',
               fontWeight: 600,
               color: 'var(--color-maroon)',
               margin: 0,
               letterSpacing: '2px',
             }}>
-              मंदिर Mahjong
+              Gunn gava tin jeev bhramrup thai
             </h1>
-            <LotusDecoration className="text-saffron" />
           </div>
           <p style={{
             fontFamily: 'var(--font-body)',

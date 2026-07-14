@@ -20,8 +20,8 @@ export default function FoundWordsList() {
   return (
     <div className="found-words-list" style={{
       position: 'absolute',
-      top: 100,
-      right: 20,
+      top: 80,
+      left: 20,
       width: 220,
       maxHeight: 'calc(100vh - 120px)',
       overflowY: 'auto',
@@ -48,14 +48,13 @@ export default function FoundWordsList() {
               animate={{ opacity: 1, x: 0 }}
               style={{
                 fontFamily: 'var(--font-ui)',
-                fontSize: 14,
-                fontWeight: 600,
-                color: 'var(--color-temple-text-dark)',
-                background: 'rgba(255, 255, 255, 0.7)',
+                fontSize: 10,
+                color: 'var(--color-saffron)',
+                background: 'var(--color-temple-surface)',
                 padding: '8px 12px',
-                borderRadius: 6,
-                boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
-                borderLeft: '4px solid var(--color-saffron)'
+                border: '2px solid var(--color-saffron-dark)',
+                boxShadow: '2px 2px 0px #000000',
+                borderLeft: '4px solid var(--color-maroon)'
               }}
             >
               {word}

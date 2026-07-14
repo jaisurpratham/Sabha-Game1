@@ -1,36 +1,36 @@
 @import "tailwindcss";
 
 @theme {
-  /* Arcade Color Palette */
+  /* Arcade Color Palette (Synthwave/Neon) */
   --color-ivory: #ffffff;
-  --color-sandstone: #222222;
-  --color-sandstone-dark: #111111;
-  --color-beige: #333333;
-  --color-beige-light: #444444;
+  --color-sandstone: #1f2833;
+  --color-sandstone-dark: #0b0c10;
+  --color-beige: #1a1a24;
+  --color-beige-light: #2c2c3e;
   
-  --color-saffron: #FFFF00; /* Pac-Man Yellow */
-  --color-saffron-light: #FFFF66;
-  --color-saffron-dark: #CCCC00;
+  --color-saffron: #66fcf1; /* Neon Cyan */
+  --color-saffron-light: #8ffff8;
+  --color-saffron-dark: #45a29e;
   
-  --color-maroon: #FF0000; /* Mario Red */
-  --color-maroon-light: #FF3333;
-  --color-maroon-dark: #CC0000;
+  --color-maroon: #ff007f; /* Neon Magenta/Pink */
+  --color-maroon-light: #ff4da6;
+  --color-maroon-dark: #cc0066;
   
-  --color-gold: #FF00FF; /* Neon Magenta */
-  --color-gold-light: #FF66FF;
-  --color-gold-dark: #CC00CC;
+  --color-gold: #f3e5f5; /* Soft neon white/purple */
+  --color-gold-light: #ffffff;
+  --color-gold-dark: #ce93d8;
   
-  --color-teal: #00FFFF; /* Cyan */
-  --color-teal-light: #66FFFF;
-  --color-teal-dark: #00CCCC;
+  --color-teal: #7b1fa2; /* Deep purple */
+  --color-teal-light: #ab47bc;
+  --color-teal-dark: #4a148c;
 
   /* Arcade Neutrals */
-  --color-temple-bg: #000000; /* Pitch black */
-  --color-temple-surface: #111111;
-  --color-temple-border: #333333;
+  --color-temple-bg: #0b0c10;
+  --color-temple-surface: #12141a;
+  --color-temple-border: #45a29e;
   --color-temple-shadow: #000000;
-  --color-temple-text: #FFFFFF;
-  --color-temple-text-light: #AAAAAA;
+  --color-temple-text: #c5c6c7;
+  --color-temple-text-light: #8b8c8d;
 
   /* Typography */
   --font-heading: 'Press Start 2P', monospace;
@@ -73,10 +73,10 @@ body {
   inset: 0;
   z-index: 0;
   overflow: hidden;
-  background-color: #000000;
+  background-color: var(--color-temple-bg);
   background-image: 
-    linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+    linear-gradient(rgba(69, 162, 158, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(69, 162, 158, 0.1) 1px, transparent 1px);
   background-size: 40px 40px;
   background-position: center center;
 }
@@ -132,15 +132,15 @@ body {
   overflow: hidden;
   
   /* Retro block style */
-  background: #0000FF; /* Classic Arcade Blue */
-  border: 4px solid #FFFFFF;
+  background: #1f2833;
+  border: 4px solid var(--color-saffron-dark);
   box-shadow: 4px 4px 0px #000000;
-  border-radius: 0;
+  border-radius: 4px;
 }
 
 /* Hover */
 .tile:hover .tile-face {
-  background: #3333FF;
+  background: #2b3947;
   border-color: var(--color-saffron);
 }
 
@@ -151,9 +151,9 @@ body {
 
 /* Selected */
 .tile-selected .tile-face {
-  background: var(--color-saffron);
-  color: #000000;
-  border-color: #FFFFFF;
+  background: var(--color-maroon);
+  color: #ffffff;
+  border-color: #ffffff;
 }
 
 .tile-selected {
@@ -164,18 +164,18 @@ body {
 
 /* Disabled/Facedown (Memory Match style) */
 .tile-disabled .tile-face {
-  background: #333333;
-  border-color: #666666;
-  color: #AAAAAA;
+  background: #0b0c10;
+  border-color: #1f2833;
+  color: #45a29e;
 }
 
 /* ===== Card / Panel Styles ===== */
 
 .temple-card, .temple-card-elevated {
-  background: #111111;
-  border: 4px solid #FFFFFF;
+  background: var(--color-temple-surface);
+  border: 4px solid var(--color-saffron-dark);
   box-shadow: 8px 8px 0px #000000;
-  border-radius: 0;
+  border-radius: 8px;
 }
 
 /* ===== Button Styles ===== */
@@ -194,19 +194,19 @@ body {
   transition: all 0.1s ease;
   user-select: none;
   text-transform: uppercase;
-  background: #000000;
-  color: #FFFFFF;
-  box-shadow: 4px 4px 0px #FFFFFF;
+  background: var(--color-temple-surface);
+  color: var(--color-saffron);
+  box-shadow: 4px 4px 0px var(--color-saffron-dark);
 }
 
 .btn-temple:hover {
   transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0px #FFFFFF;
+  box-shadow: 6px 6px 0px var(--color-saffron);
 }
 
 .btn-temple:active {
   transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0px #FFFFFF;
+  box-shadow: 2px 2px 0px var(--color-saffron);
 }
 
 .btn-primary {
@@ -226,27 +226,27 @@ body {
   width: 48px;
   height: 48px;
   padding: 0;
-  border-radius: 0;
+  border-radius: 4px;
   font-size: 18px;
-  background: #000000;
-  border: 4px solid #FFFFFF;
-  color: #FFFFFF;
+  background: var(--color-temple-surface);
+  border: 4px solid var(--color-saffron-dark);
+  color: var(--color-saffron);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 4px 4px 0px #FFFFFF;
+  box-shadow: 4px 4px 0px var(--color-saffron-dark);
 }
 
 .btn-icon:hover {
-  background: #222222;
+  background: #1f2833;
   transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0px #FFFFFF;
+  box-shadow: 6px 6px 0px var(--color-saffron);
 }
 
 .btn-icon:active {
   transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0px #FFFFFF;
+  box-shadow: 2px 2px 0px var(--color-saffron);
 }
 
 /* ===== Header ===== */
@@ -256,9 +256,9 @@ body {
   top: 0;
   z-index: 50;
   padding: 16px 20px;
-  background: #000000;
-  border-bottom: 4px solid var(--color-teal);
-  box-shadow: 0 4px 0px #000000;
+  background: var(--color-temple-bg);
+  border-bottom: 4px solid var(--color-maroon);
+  box-shadow: 0 4px 0px rgba(204, 0, 102, 0.4);
 }
 
 /* ===== Progress Bar ===== */
@@ -270,20 +270,20 @@ body {
   right: 0;
   z-index: 50;
   padding: 16px 20px;
-  background: #000000;
-  border-top: 4px solid var(--color-teal);
+  background: var(--color-temple-bg);
+  border-top: 4px solid var(--color-maroon);
 }
 
 .progress-bar-track {
   width: 100%;
   height: 16px;
-  background: #222222;
-  border: 2px solid #FFFFFF;
+  background: var(--color-sandstone);
+  border: 2px solid var(--color-saffron-dark);
 }
 
 .progress-bar-fill {
   height: 100%;
-  background: var(--color-teal);
+  background: var(--color-maroon);
   transition: width 0.2s linear;
 }
 
